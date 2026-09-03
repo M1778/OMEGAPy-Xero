@@ -143,6 +143,32 @@ class TestMainPy:
 
 
 # ---------------------------------------------------------------------------
+# xmanager.py – openwakeword graceful skip
+# ---------------------------------------------------------------------------
+
+class TestOpenWakewordSkip:
+    def test_openwakeword_import_is_guarded(self):
+        path = os.path.join(os.path.dirname(__file__), "..", "SoreUI", "files", "xmanager.py")
+        with open(path) as f:
+            content = f.read()
+        assert "try:" in content, "openwakeword import should be wrapped in try/except"
+        assert "ImportError" in content, "openwakeword import should catch ImportError"
+        assert "_HAS_OPENWAKEWORD" in content, "should track openwakeword availability flag"
+
+    def test_openwakeword_model_is_optional(self):
+        path = os.path.join(os.path.dirname(__file__), "..", "SoreUI", "files", "xmanager.py")
+        with open(path) as f:
+            content = f.read()
+        assert "owwmodel = None" in content, "owwmodel should default to None when openwakeword missing"
+
+    def test_audio_callback_guards_missing_model(self):
+        path = os.path.join(os.path.dirname(__file__), "..", "SoreUI", "files", "xmanager.py")
+        with open(path) as f:
+            content = f.read()
+        assert "if owwmodel is None" in content, "audio_callback should guard None model"
+
+
+# ---------------------------------------------------------------------------
 # Dead code files marked as unused
 # ---------------------------------------------------------------------------
 

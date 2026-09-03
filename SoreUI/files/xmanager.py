@@ -12,7 +12,11 @@ import wave
 import threading
 import difflib
 import sys
-from openwakeword.model import Model
+try:
+    from openwakeword.model import Model
+    _HAS_OPENWAKEWORD = True
+except ImportError:
+    _HAS_OPENWAKEWORD = False
 from omglib.tools import pathtools
 from omglib.ai import tts,map
 from omglib.llm import tools
@@ -33,7 +37,10 @@ P = lambda _:str(pathtools.smart_paths(__file__,'..',_).absolute())
 
 OMEGAPYXERO_MODELS_PATH = str(Path(__file__).parent.parent.parent.joinpath("models").absolute())
 
-owwmodel = Model(wakeword_models=[P('data/omega_py.onnx')])
+if _HAS_OPENWAKEWORD:
+    owwmodel = Model(wakeword_models=[P('data/omega_py.onnx')])
+else:
+    owwmodel = None
 WAKEWORD_THRESHOLD = 0.5
 
 config = None
@@ -543,6 +550,9 @@ def audio_callback(indata, frames, time, status):
     audio_block = indata[:, 0]
 
     audio_int16 = np.asarray(audio_block, dtype=np.int16)
+
+    if owwmodel is None:
+        return
 
     prediction = owwmodel.predict(audio_int16)
 
