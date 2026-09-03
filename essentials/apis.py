@@ -95,10 +95,6 @@ class TogetherAI(BaseAPI):
         return comp
 
     def convert_message_roles(self):
-        from together.types import chat_completions
-        for i in range(len(self.messages)):
-            if self.messages[i]['role'] == chat_completions.MessageRole.ASSISTANT and str(self.messages[i]['role']) != self.messages[i]['role']:
-                self.messages[i]['role'] = 'assistant'
         return True
 
 

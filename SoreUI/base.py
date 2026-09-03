@@ -1,13 +1,15 @@
 # Imports
 from configparser import ConfigParser
+import os
 import sqlite3
 import datetime
 import secrets
 import string
 
 # Read config
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 config = ConfigParser()
-config.read("sql.cfg")
+config.read(os.path.join(_BASE_DIR, "sql.cfg"))
 sqlpath = config['sqlconfig']['sqlpath']
 
 

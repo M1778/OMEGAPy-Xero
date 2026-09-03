@@ -42,11 +42,6 @@ elif model['name'] == "groqai":
     api.system_message(initial_prompt,False)
     while True:
         chat= input("SendMessage: ")
-        if chat == "breakpoint":
-            breakpoint()
-            continue
-        #if prompt == prompts.official_assistant_formatting_v1:
-        #    api.system_message(initial_prompt,False)
         response=api.user_message(chat)
         print_slow(response.choices[0].message.content)
 elif model['name'] == "togetherai":
@@ -55,9 +50,6 @@ elif model['name'] == "togetherai":
     api.system_message(initial_prompt,False)
     while True:
         chat= input("SendMessage: ")
-        if chat == "breakpoint":
-            breakpoint()
-            continue
         #if prompt == prompts.official_assistant_formatting_v1:
         #    api.system_message(initial_prompt,False)
         response=api.user_message(chat)
