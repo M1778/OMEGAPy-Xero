@@ -1,0 +1,122 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "omegapy-xero"
+version = "2.0.0"
+description = "Interactive AI assistant powered by OMEGAPy-XInter/Xero"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "M1778"},
+]
+keywords = ["ai", "assistant", "voice", "chatbot", "llm"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    # Web UI
+    "flask>=3.0,<4.0",
+
+    # AI API Integrations
+    "openai>=1.0,<2.0",
+    "groq>=0.12,<1.0",
+    "together>=1.0,<2.0",
+
+    # Markdown Rendering
+    "markdown-it-py>=3.0,<4.0",
+    "markdown>=3.4,<4.0",
+
+    # Audio Processing
+    "numpy>=1.24,<2.0",
+    "pyaudio>=0.2.14",
+    "pydub>=0.25,<1.0",
+    "sounddevice>=0.4,<1.0",
+
+    # Text-to-Speech
+    "pyttsx3>=2.90,<3.0",
+    "gTTS>=2.3,<3.0",
+
+    # Speech-to-Text
+    "SpeechRecognition>=3.10,<4.0",
+
+    # Translation
+    "deep-translator>=1.11,<2.0",
+
+    # Voice Activity Detection / Wake Word
+    "webrtcvad>=2.0,<3.0",
+    "openwakeword>=0.6,<1.0",
+
+    # System & Input
+    "psutil>=5.9,<6.0",
+    "keyboard>=0.13,<1.0",
+    "pynput>=1.7,<2.0",
+    "pyautogui>=0.9,<1.0",
+
+    # Web Scraping & Parsing
+    "beautifulsoup4>=4.12,<5.0",
+    "lxml>=4.9,<6.0",
+    "Scrapy>=2.6,<3.0",
+    "requests>=2.28,<3.0",
+
+    # Security
+    "cryptography>=41.0,<43.0",
+    "bcrypt>=4.0,<5.0",
+
+    # Database
+    "SQLAlchemy>=1.4,<3.0",
+
+    # Image Processing
+    "Pillow>=10.0,<11.0",
+    "opencv-python>=4.8,<5.0",
+    "pytesseract>=0.3,<1.0",
+
+    # Weather & Search
+    "python-weather>=2.0,<3.0",
+    "serpapi>=0.1,<1.0",
+
+    # Additional AI APIs
+    "cohere>=5.0,<6.0",
+    "mistralai>=1.0,<2.0",
+]
+
+[project.optional-dependencies]
+desktop = [
+    "PyQt6>=6.5,<7.0",
+    "PyQt6-Charts>=6.5,<7.0",
+    "pyqtdarktheme>=2.1,<3.0",
+]
+ml = [
+    "torch>=2.0,<3.0",
+    "openai-whisper>=20230918,<20240101",
+    "vosk>=0.3.45,<1.0",
+    "onnxruntime>=1.16,<2.0",
+]
+all = [
+    "omegapy-xero[desktop,ml]",
+]
+dev = [
+    "pytest>=7.0,<8.0",
+    "pytest-qt>=4.2,<5.0",
+    "black>=23.0,<24.0",
+    "flake8>=6.0,<7.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/M1778/OMEGAPy-Xero"
+Repository = "https://github.com/M1778/OMEGAPy-Xero"
+Issues = "https://github.com/M1778/OMEGAPy-Xero/issues"
+
+[tool.setuptools.packages.find]
+include = ["essentials*", "SoreUI*"]

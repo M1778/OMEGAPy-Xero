@@ -17,101 +17,71 @@
     </div>
     <div class="chat-box glass-panel" id="chat-box">
         <div id="chat-contain">
-        <!-- Chat messages will be displayed here -->
-         <!--
-                <script>
-                    var chatbox = document.getElementById("chat-box")
-                    var element = document.createElement("div");
-                    element.classList.add("chat-message");
-                    element.classList.add("bot-message");
-                    var markdownText = `{ message['content'] }`;
-                    element.innerHTML = markdownText;
-                    // element.innerHTML = markdownText;
-                    chatbox.appendChild(element)
-                </script> -->
-
-                <!--
-                <script>
-                    var chatbox = document.getElementById("chat-box")
-                    var element = document.createElement("div");
-                    element.classList.add("chat-message");
-                    element.classList.add("user-message");
-                    var markdownText = `{ message["content"] }`;
-                    element.innerHTML = markdownText;
-                    chatbox.appendChild(element)
-                </script>
-                -->
-
-            <!--
-                <div class="chat-message bot-message">
-                    { message["content"] | safe }
-                </div>
-    -->
             <script>
+                var csrfToken = {{ csrf_token() | tojson }};
+
                 function fetch_data(){
                     return $.ajax({
                         data : {
                             request_messages: "TRUE",
+                            _csrf_token: csrfToken,
                         },
                         type: 'POST',
                         url: '/req'
-                    })
+                    });
                 }
 
                 function send_message(message){
                     return $.ajax({
                         data : {
                             newMessage : message,
+                            _csrf_token: csrfToken,
                         },
                         type: 'POST',
                         url: '/ajax'
                     });
                 }
+
                 function reset_chatbox(){
                     $("#chat-contain").children().remove();
                 }
+
                 function load_msgs(msgs){
                     var chatbox = document.getElementById("chat-contain");
                     for (var key in msgs){
+                        if (!msgs.hasOwnProperty(key)) continue;
+                        var element = document.createElement("div");
+                        element.classList.add("chat-message");
                         if (msgs[key].role == 'assistant'){
-                            var element = document.createElement("div");
-                            element.classList.add("chat-message");
                             element.classList.add("bot-message");
                             element.innerHTML = msgs[key].content;
-                            chatbox.appendChild(element);
                         } else if (msgs[key].role == 'user'){
-                            var element = document.createElement("div");
-                            element.classList.add("chat-message");
                             element.classList.add("user-message");
-                            element.innerHTML = msgs[key].content;
-                            chatbox.appendChild(element);
+                            element.textContent = msgs[key].content;
                         }
+                        chatbox.appendChild(element);
                     }
                 }
-
             </script>
         </div>
     </div>
     <form id="user-input-form" class="form1 rel">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
         <div class="textarea-container rel">
             <textarea class="textinput cursor-type" id="user-input" name="newMessage" placeholder="Type your message..." required></textarea><br>
         </div>
         <button type="submit" id="submit-btn" class="glass-button">Send</button>
         <script>
-            function isEmpty( el ){
-                return !$.trim(el.html())}
-            
             $('textarea#user-input').keydown(function (e) {
                 if (e.keyCode === 13 && e.ctrlKey) {
-                    //console.log("enterKeyDown+ctrl");
                     $(this).val(function(i,val){
                         return val + "\n";
                     });
                 }
             }).keypress(function(e){
                 if (e.keyCode === 13 && !e.ctrlKey && !e.shiftKey) {
-                    if (!$.trim($('#user-input').val()).length < 1) {
-                        $("#user-input-form").submit()
+                    if ($.trim($('#user-input').val()).length > 0) {
+                        $("#user-input-form").submit();
                     }
                     return false;
                 }
@@ -119,42 +89,36 @@
         </script>
     </form>
     <script>
-        var d=fetch_data();
+        var d = fetch_data();
         reset_chatbox();
-        d.done(function(data){load_msgs(data)});
+        d.done(function(data){ load_msgs(data); });
         var in_process = false;
         $(document).ready(function(){
             $("#user-input-form").submit(function(e){
                 if (in_process == true){
                     $("#user-input").css("box-shadow","0 0 15px red");
-                    // --------------------------------------------------- REMEMBER here
-                    // --------------------------------------------------- REMEMBER here
-                    // --------------------------------------------------- REMEMBER here
-                    
-                    setTimeout(function(){in_process = false;$("#user-input").css("box-shadow",'none')},2000);
+                    setTimeout(function(){ in_process = false; $("#user-input").css("box-shadow",'none'); }, 2000);
                 } else {
-                in_process = true;
-                
-                // ---------------------------------------
-                var stored = $("#user-input").val();
-                $("#user-input").val('');
-                send_message(stored).done(function(x){
-                    // Send message and update messages
-                    var d=fetch_data();
-                    d.done(function(data){load_msgs(data)});
-                    reset_chatbox();
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                    hljs.highlightAll();
-                    
-                });}
-                is_process = false;
+                    in_process = true;
+                    var stored = $("#user-input").val();
+                    $("#user-input").val('');
+                    send_message(stored).done(function(x){
+                        var d = fetch_data();
+                        reset_chatbox();
+                        d.done(function(data){ load_msgs(data); });
+                        var chatBox = document.getElementById('chat-box');
+                        chatBox.scrollTop = chatBox.scrollHeight;
+                        hljs.highlightAll();
+                    });
+                }
+                in_process = false;
                 e.preventDefault();
             });
         });
     </script>
 </div>
 <script>
-const chatBox = document.getElementById('chat-box');
+var chatBox = document.getElementById('chat-box');
 chatBox.scrollTop = chatBox.scrollHeight;
 hljs.highlightAll();
 </script>

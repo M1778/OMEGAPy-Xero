@@ -16,29 +16,9 @@
         <h1>AI Chatbot</h1>
     </div>
     <div class="chat-box glass-panel" id="chat-box">
-        <!-- Chat messages will be displayed here -->
-         <!--
-                <script>
-                    var chatbox = document.getElementById("chat-box")
-                    var element = document.createElement("div");
-                    element.classList.add("chat-message");
-                    element.classList.add("bot-message");
-                    var markdownText = `{ message['content'] }`;
-                    element.innerHTML = markdownText;
-                    // element.innerHTML = markdownText;
-                    chatbox.appendChild(element)
-                </script> -->
         {% for message in messages %}
             {% if message["role"] == "user" %}
-                <script>
-                    var chatbox = document.getElementById("chat-box")
-                    var element = document.createElement("div");
-                    element.classList.add("chat-message");
-                    element.classList.add("user-message");
-                    var markdownText = `{{ message["content"] }}`;
-                    element.innerHTML = markdownText;
-                    chatbox.appendChild(element)
-                </script>
+                <div class="chat-message user-message" data-user-message="{{ message["content"] | e }}"></div>
             {% elif message["role"] == "assistant" %}
                 <div class="chat-message bot-message">
                     {{ message["content"] | safe }}
@@ -47,25 +27,22 @@
         {% endfor %}
     </div>
     <form action='/' id="user-input-form" method="POST" class="form1 rel">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
         <div class="textarea-container rel">
             <textarea class="textinput cursor-type" id="user-input" name="newMessage" placeholder="Type your message..." required></textarea><br>
         </div>
         <button type="submit" id="submit-btn" class="glass-button">Send</button>
         <script>
-            function isEmpty( el ){
-                return !$.trim(el.html())}
-            
             $('textarea#user-input').keydown(function (e) {
                 if (e.keyCode === 13 && e.ctrlKey) {
-                    //console.log("enterKeyDown+ctrl");
                     $(this).val(function(i,val){
                         return val + "\n";
                     });
                 }
             }).keypress(function(e){
                 if (e.keyCode === 13 && !e.ctrlKey && !e.shiftKey) {
-                    if (!$.trim($('#user-input').val()).length < 1) {
-                        $("#user-input-form").submit()
+                    if ($.trim($('#user-input').val()).length > 0) {
+                        $("#user-input-form").submit();
                     }
                     return false;
                 }
@@ -74,7 +51,10 @@
     </form>
 </div>
 <script>
-const chatBox = document.getElementById('chat-box');
+document.querySelectorAll('[data-user-message]').forEach(function(el) {
+    el.textContent = el.getAttribute('data-user-message');
+});
+var chatBox = document.getElementById('chat-box');
 chatBox.scrollTop = chatBox.scrollHeight;
 hljs.highlightAll();
 </script>

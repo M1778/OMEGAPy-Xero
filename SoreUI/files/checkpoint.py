@@ -1,3 +1,4 @@
+# UNUSED - kept for reference
 # Form implementation generated from reading ui file 'interface.ui'
 #
 # Created by: PyQt6 UI code generator 6.7.1

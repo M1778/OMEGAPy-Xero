@@ -307,13 +307,7 @@ class MainWindow(QMainWindow):
         bottom_layout.addStretch()
         main_layout.addLayout(bottom_layout)
 
-        # Example chat messages
-        # for i in range(1):
-        #     self.add_chat_message("Hello! How can I help you?",False)
-        #     self.add_chat_message("Where is my dad?")
-
         # DROP SHADOW EFFECT
-        # TODO: MAKE AN ANIMATION FOR IT YOU BATMAN
         shadow_effect = QGraphicsDropShadowEffect()
         shadow_effect.setColor(QColor(0, 255, 255)) 
         shadow_effect.setOffset(0, 0)
@@ -325,7 +319,6 @@ class MainWindow(QMainWindow):
         self.tools = tools.ALL_AVAILABLE_TOOLS
         self.is_processing = False
         self.last_3 = 3
-        # DISABLE DEBUG MODE IF YOU WANT
         QShortcut(QKeySequence("Ctrl+D"),self,self.debug)
         ipu_timer = QTimer()
         ipu_timer.timeout.connect(self.is_process_update)
@@ -382,8 +375,7 @@ class MainWindow(QMainWindow):
         self.sett.remember(self)
         self.sett.show()
     def debug(self):
-        ''' This has to be all my skills of programming in python combined\nUsing breakpoint() as a debug mode solution\nIm a geniius '''
-        breakpoint()
+        pass
     def on_switch_to_text(self):
         QMessageBox.warning(self,"Error","This section has some bugs.\nIn order to use text-based interface choose the web option instead.") # Im lying it's not done yet # Im still lying its done but I'm too lazy to sync them # Im not lying anymore
         # Never give up
@@ -594,7 +586,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    # KMS
-    # KMS
-    # KMS
-    # Just wanted to make it 600 lines cause it's cool :)

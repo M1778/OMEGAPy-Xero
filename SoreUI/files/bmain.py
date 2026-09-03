@@ -1,3 +1,4 @@
+# UNUSED - kept for reference
 # FAILED BECAUSE OF LACK OF MOTIVATION -> LAZYNESS PROBABLY ITS FAIR BECAUSE NOBODY PAID ME TO DO THIS
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import *

@@ -9,11 +9,11 @@
 <div class="login-container">
     <h1>Enter Your API Key</h1>
     <form action='/login' id="api-key-form" method="POST">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
         <select class="curser-click" name="apiplatform">
             <option value="chatgpt">ChatGPT</option>
             <option value="groq">Groq AI</option>
             <option value="together">Together AI</option>
-            
         </select>
         <input type="text" id="api-key" class="cursor-type" name="apikey" placeholder="API Key" required>
         <button class="cursor-click" type="submit">Submit</button>

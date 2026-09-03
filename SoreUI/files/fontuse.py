@@ -1,6 +1,7 @@
+# UNUSED - kept for reference
 import sys
-from PyQt5.QtWidgets import QApplication, QLabel
-from PyQt5.QtGui import QFontDatabase
+from PyQt6.QtWidgets import QApplication, QLabel
+from PyQt6.QtGui import QFontDatabase, QFont
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -22,4 +23,4 @@ if __name__ == "__main__":
         label.setFont(custom_font)
         label.show()
 
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
