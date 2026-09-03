@@ -3,6 +3,7 @@
 
 # Web UI
 flask>=3.0,<4.0
+setuptools>=70.0,<81.0
 
 # AI API Integrations
 openai>=1.0,<2.0

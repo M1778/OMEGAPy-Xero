@@ -3,6 +3,7 @@
 
 # GUI Framework
 PyQt6>=6.5,<7.0
+setuptools>=70.0,<81.0
 
 # Local library (install manually - not on PyPI)
 # omglib==0.1.45
