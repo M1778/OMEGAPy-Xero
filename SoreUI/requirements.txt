@@ -10,14 +10,17 @@ PyQt6>=6.5,<7.0
 # Audio
 pyaudio>=0.2.14
 sounddevice>=0.4,<1.0
-numpy>=1.24,<2.0
+numpy>=1.24
 
 # Speech
 pyttsx3>=2.90,<3.0
 gTTS>=2.3,<3.0
 SpeechRecognition>=3.10,<4.0
 webrtcvad>=2.0,<3.0
-openwakeword>=0.6,<1.0
+
+# NOTE: openwakeword requires tflite-runtime which lacks Python 3.14 wheels.
+# Install manually if on Python <=3.12:
+#   pip install openwakeword>=0.6,<1.0
 
 # System
 psutil>=5.9,<6.0

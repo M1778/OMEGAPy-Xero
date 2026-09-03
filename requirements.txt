@@ -7,14 +7,14 @@ flask>=3.0,<4.0
 # AI API Integrations
 openai>=1.0,<2.0
 groq>=0.12,<1.0
-together>=1.0,<2.0
+together>=1.5,<2.0
 
 # Markdown Rendering
 markdown-it-py>=3.0,<4.0
 markdown>=3.4,<4.0
 
 # Audio Processing
-numpy>=1.24,<2.0
+numpy>=1.24
 pyaudio>=0.2.14
 pydub>=0.25,<1.0
 sounddevice>=0.4,<1.0
@@ -29,9 +29,12 @@ SpeechRecognition>=3.10,<4.0
 # Translation
 deep-translator>=1.11,<2.0
 
-# Voice Activity Detection / Wake Word
+# Voice Activity Detection
 webrtcvad>=2.0,<3.0
-openwakeword>=0.6,<1.0
+
+# NOTE: openwakeword requires tflite-runtime which lacks Python 3.14 wheels.
+# Install manually if on Python <=3.12:
+#   pip install openwakeword>=0.6,<1.0
 
 # System & Input
 psutil>=5.9,<6.0
@@ -41,19 +44,19 @@ pyautogui>=0.9,<1.0
 
 # Web Scraping & Parsing
 beautifulsoup4>=4.12,<5.0
-lxml>=4.9,<6.0
+lxml>=4.9
 Scrapy>=2.6,<3.0
 requests>=2.28,<3.0
 
 # Security
-cryptography>=41.0,<43.0
+cryptography>=41.0,<44.0
 bcrypt>=4.0,<5.0
 
 # Database
 SQLAlchemy>=1.4,<3.0
 
 # Image Processing
-Pillow>=10.0,<11.0
+Pillow>=10.0,<12.0
 opencv-python>=4.8,<5.0
 pytesseract>=0.3,<1.0
 
