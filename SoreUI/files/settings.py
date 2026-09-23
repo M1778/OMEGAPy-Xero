@@ -39,7 +39,10 @@ def unzip_file(zip_path, extract_to):
 _map.VMM.models_path=str(Path(__file__).parent.parent.parent.joinpath("models").absolute())
 
 
-simpletts_engine = pyttsx3.init()
+try:
+    simpletts_engine = pyttsx3.init()
+except Exception:
+    simpletts_engine = None
 #Predefined General Chat API TTS STT Security About Plugins
 
 class SettingsWindow(QMainWindow):
@@ -919,6 +922,9 @@ class SettingsWindow(QMainWindow):
             _=self.config['Text2Speech']['Platform']
             lang = self.config['Text2Speech']['Language']
             if _ == "SIMPLETTS":
+                if simpletts_engine is None:
+                    QMessageBox.warning(self,"Settings","SimpleTTS is unavailable (eSpeak not installed).")
+                    return
                 if lang != 'en':
                     QMessageBox.warning(self,"Settings",f"SimpleTTS does not support the language (Only English): {_langs[lang]}")
                 simpletts_engine.say(text)
